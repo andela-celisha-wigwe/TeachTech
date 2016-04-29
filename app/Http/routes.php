@@ -28,4 +28,5 @@ Route::get('video/{id}', 'VideosController@show');
 Route::post('user/update', 'UsersController@updateUser');
 Route::get('categories', 'CategoriesController@index');
 Route::post('comment', 'CommentsController@create');
+Route::delete('comment/delete', 'CommentsController@destroy');
 Route::patch('comment/{id}', 'CommentsController@update');
