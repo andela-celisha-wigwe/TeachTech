@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use Illuminate\Database\Eloquent\Model;
 
 class DatabaseSeeder extends Seeder
 {
@@ -11,6 +12,17 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(UsersTableSeeder::class);
+
+        Model::unguard();
+
+        factory('TeachTech\Video', 5)->create();
+
+        factory('TeachTech\Comment', 15)->create();
+
+        factory('TeachTech\User', 5)->create();
+
+        factory('TeachTech\Category', 4)->create();
+
+        Model::reguard();
     }
 }

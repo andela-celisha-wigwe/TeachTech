@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace TeachTech\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

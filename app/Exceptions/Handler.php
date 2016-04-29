@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Exceptions;
+namespace TeachTech\Exceptions;
 
 use Exception;
 use Illuminate\Validation\ValidationException;
