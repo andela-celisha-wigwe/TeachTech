@@ -47,4 +47,9 @@ class User extends Authenticatable
         // dd($comment);
         return $this->id == $comment->user_id;
     }
+
+    public function numberOfVidoes()
+    {
+        return count($this->videos);
+    }
 }

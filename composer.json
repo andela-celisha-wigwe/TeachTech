@@ -9,7 +9,8 @@
         "laravel/framework": "5.3.*",
         "laravel/socialite": "^2.0",
         "laravelcollective/html": "~5.0",
-        "fzaninotto/faker": "^1.5"
+        "fzaninotto/faker": "^1.5",
+        "cloudinary/cloudinary_php": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
