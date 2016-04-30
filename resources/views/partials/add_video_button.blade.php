@@ -1,0 +1,1 @@
+<button class="btn-primary add-video pull-right" data-toggle="modal" id="add-video-button" data-target="#new-video-form"><i class="fa fa-plus"></i> New</button>

@@ -1,0 +1,1 @@
+<input type="text" name="comment" class="form-input" value="{{ old('comment') }}" required />
