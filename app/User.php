@@ -44,12 +44,21 @@ class User extends Authenticatable
     public function isCommenter($id)
     {
         $comment = Comment::find($id);
-        // dd($comment);
         return $this->id == $comment->user_id;
     }
 
     public function numberOfVidoes()
     {
         return count($this->videos);
+    }
+
+    public function getAvatar()
+    {
+        return $this->hasAvatar() ? $this->avatar : asset('uploads/def_profile.png');
+    }
+
+    private function hasAvatar()
+    {
+        return $this->avatar != null;
     }
 }
