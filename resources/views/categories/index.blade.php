@@ -12,22 +12,24 @@
             <div class="row">
                 @foreach($categories as $category)
                   <div class="col-sm-6 col-md-3">
-                    <div class="thumbnail">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <!-- <a href=""></a> -->
-                                <img src="{{ Auth::user()->getAvatar() }}" style="width: 100%;" class="" alt="...">  
+                    <a href="/categories/{{ $category->id }}">
+                        <div class="thumbnail">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <!-- <a href=""></a> -->
+                                    <img src="{{ Auth::user()->getAvatar() }}" style="width: 100%;" class="" alt="...">  
+                                </div>
+                                <div class="col-md-4" style="position: absolute;">
+                                      <button class="list-group-item">
+                                        <span class="badge">{{ $category->numberOfVideos() }}</span>
+                                      </button>
+                                </div>
                             </div>
-                            <div class="col-md-4" style="position: absolute;">
-                                  <button class="list-group-item">
-                                    <span class="badge">{{ $category->numberOfVideos() }}</span>
-                                  </button>
-                            </div>
+                          <div class="caption">
+                            <h4>{{ $category->name }}</h4>
+                          </div>
                         </div>
-                      <div class="caption">
-                        <h4>{{ $category->name }}</h4>
-                      </div>
-                    </div>
+                    </a>
                   </div>
                 @endforeach
             </div>
