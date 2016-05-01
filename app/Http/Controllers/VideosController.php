@@ -66,6 +66,12 @@ class VideosController extends Controller
     {
         $id = $request->id;
         $video = Video::find($id);
+        $user = Auth::user();
+
+        if ($user->cannnotHandle($video)) {
+            $request->session()->flash('error', 'Not allowed');
+            return redirect()->back();
+        }
 
         return view('videos.edit', compact('video'));
     }
@@ -93,11 +99,13 @@ class VideosController extends Controller
         $video = Video::find($id);
         $user = Auth::user();
 
-        if ($user->cannnotDelete($video)) {
+        if ($user->cannnotHandle($video)) {
+            $request->session()->flash('error', 'Not allowed');
             return redirect()->back();
         }
 
         $video->delete();
+
         $request->session()->flash('success', 'Video Deleted');
         return redirect()->back();
     }

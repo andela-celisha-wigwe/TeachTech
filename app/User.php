@@ -62,13 +62,13 @@ class User extends Authenticatable
         return $this->avatar != null;
     }
 
-    public function canDelete($video)
+    public function canHandle($video)
     {
         return $this == $video->user;
     }
 
-    public function cannnotDelete($video)
+    public function cannnotHandle($video)
     {
-        return !($this->canDelete($video));
+        return !($this->canHandle($video));
     }
 }

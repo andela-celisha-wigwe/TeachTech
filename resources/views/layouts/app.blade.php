@@ -41,7 +41,13 @@
 
     @if(Session::has('success'))
         <div class="alert-success success">
-            <h2>{{ Session::get('success') }}</h2>
+            <p>{{ Session::get('success') }}</p>
+        </div>
+    @endif
+
+    @if(Session::has('error'))
+        <div class="alert-danger danger">
+            <p>{{ Session::get('error') }}</p>
         </div>
     @endif
 
