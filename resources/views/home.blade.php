@@ -118,20 +118,28 @@
                     <div class="user-videos">
                         <div class='row'>
                             @foreach($user->videos()->get() as $video)
-                                @include('partials.video_view')
-                            @endforeach
-                                <div class='col col-md-3 col-sm-12 col-xs-12' align="center">
-                                    <ul class='list-unstyled'>
-                                        <li>
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                        <img src="{!! asset('img/2.jpg') !!}" class="img-responsive img-thumbnail add-video" />
-                                                </div>
-                                            </div>
-                                            <p class='info short'>Add video</p>
-                                        </li>
-                                    </ul>
+                                <div class="row">
+                                    <div class="col-md-2" id="{{ $video->id }}">
+                                        <div class="user-avatar thumbnail">
+                                            <img style="width:100%;" id="{{ $video->id }}" class="video_thumbnail img-responsive" src="http://img.youtube.com/vi/{{ $video->vID() }}/2.jpg" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10" id="{{ $video->id }}">
+                                        <h3>{{ $video->title }}</h3>
+                                        <p>{{ $video->description }}</p>
+                                        <div id="{{ $video->id }}">
+                                            <a href="video/{{ $video->id }}/edit" class="btn btn-default">Edit</a>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="thumbnail">
+                                        <img style="width:100%; height:50%;" id="{{ $video->id }}" class="video_thumbnail img-responsive" src="http://img.youtube.com/vi/{{ $video->vID() }}/2.jpg" />
+                                        <div class="caption">
+                                            <h4>{{ $video->title }}</h4>
+                                            <p>{{ $video->description }}</p>
+                                        </div>
+                                    </div> -->
                                 </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>
