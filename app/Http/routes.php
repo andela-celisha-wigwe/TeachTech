@@ -25,6 +25,7 @@ Route::post('twitter/login', 'Auth\AuthController@useTwitterEmail');
 Route::post('video/add', 'VideosController@createVideo');
 Route::get('videos', 'VideosController@index');
 Route::get('video/{id}/edit', 'VideosController@edit');
+Route::get('video/{id}/delete', 'VideosController@delete');
 Route::delete('video/{id}', 'VideosController@destroy');
 Route::get('video/{id}', 'VideosController@show');
 Route::post('video/{id}/update', 'VideosController@update');

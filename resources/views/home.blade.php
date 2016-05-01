@@ -129,6 +129,7 @@
                                         <p>{{ $video->description }}</p>
                                         <div id="{{ $video->id }}">
                                             <a href="video/{{ $video->id }}/edit" class="btn btn-default">Edit</a>
+                                            <a href="video/{{ $video->id }}/delete" class="btn btn-default">Delete</a>
                                         </div>
                                     </div>
                                     <!-- <div class="thumbnail">

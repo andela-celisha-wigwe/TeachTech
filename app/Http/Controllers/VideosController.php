@@ -87,4 +87,19 @@ class VideosController extends Controller
         return redirect()->back();
     }
 
+    public function delete(Request $request)
+    {
+        $id = $request->id;
+        $video = Video::find($id);
+        $user = Auth::user();
+
+        if ($user->cannnotDelete($video)) {
+            return redirect()->back();
+        }
+
+        $video->delete();
+        $request->session()->flash('success', 'Video Deleted');
+        return redirect()->back();
+    }
+
 }

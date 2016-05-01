@@ -39,6 +39,12 @@
 
     @include('videos.add')
 
+    @if(Session::has('success'))
+        <div class="alert-success success">
+            <h2>{{ Session::get('success') }}</h2>
+        </div>
+    @endif
+
     @yield('errors')
     @yield('content')
 
