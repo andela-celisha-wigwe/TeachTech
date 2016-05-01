@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use TeachTech\Http\Requests;
 use TeachTech\Video;
+use TeachTech\Category;
 use Validator;
 use TeachTech\Comment;
 use Auth;
@@ -15,7 +16,8 @@ class VideosController extends Controller
     public function index()
     {
         $videos = Video::all();
-        return view('videos.index', compact('videos'));
+        $categories = Category::all();
+        return view('videos.index', compact('videos', 'categories'));
     }
 
     /**

@@ -18,4 +18,9 @@ class Category extends Model
     {
         return $this->hasMany(Video::class);
     }
+
+    public function numberOfVideos()
+    {
+    	return count($this->videos()->get());
+    }
 }
