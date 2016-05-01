@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-md-12" id="{{ $video->id }}">
                     <div class="thumbnail">
-                        <a href="video/{{ $video->id }}">
+                        <a href="/video/{{ $video->id }}">
                             <img style="width:100%; height:50%;" id="{{ $video->id }}" class="video_thumbnail img-responsive" src="http://img.youtube.com/vi/{{ $video->vID() }}/2.jpg" />
                             <div class="caption">
                                 <!-- <h4>{{ $video->title }}</h4> -->
