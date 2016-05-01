@@ -16,4 +16,9 @@ class ExampleTest extends TestCase
         $this->visit('/')
              ->see('TeachTech');
     }
+
+    public function testAdd()
+    {
+        $this->assertEquals(1, true);
+    }
 }
