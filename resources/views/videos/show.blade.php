@@ -73,9 +73,14 @@
                                         <button class="loginButton">Login</button> to post comment.
                                     @endif
 
-                                    @foreach($comments as $comment)
-                                        @include('comments.index')
-                                    @endforeach
+                                    @if (count($comments) > 0)
+                                        @foreach($comments as $comment)
+                                            @include('comments.index')
+                                        @endforeach
+                                        <div class="col-md-12 pull-right">
+                                            {!! $comments->render() !!}
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

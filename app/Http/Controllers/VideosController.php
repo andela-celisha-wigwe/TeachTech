@@ -60,7 +60,7 @@ class VideosController extends Controller
     {
         $id = $request->id;
         $video = Video::find($id);
-        $comments = $video->comments()->latest()->get();
+        $comments = $video->comments()->latest()->paginate(4);
         return view('videos.show', compact('video', 'comments'));
     }
 
