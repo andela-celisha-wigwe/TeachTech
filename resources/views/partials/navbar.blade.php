@@ -17,6 +17,13 @@
             </div>
 
             <div class="collapse navbar-collapse navbar-right scroll-me" id="app-navbar-collapse">
+
+
+            <div class="nav navbar-nav">
+                @include('videos.search')
+            </div>
+
+
                 <!-- Left Side Of Navbar -->
                 <ul class="nav navbar-nav">
                     <li><a href="{{ url('/home') }}">Home</a></li>

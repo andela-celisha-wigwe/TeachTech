@@ -35,3 +35,5 @@ Route::post('comment', 'CommentsController@create');
 Route::delete('comment/delete', 'CommentsController@destroy');
 Route::patch('comment/{id}', 'CommentsController@update');
 Route::post('user/upload/avatar', 'UsersController@changeAvatar');
+
+Route::post('video/search', 'VideosController@search');

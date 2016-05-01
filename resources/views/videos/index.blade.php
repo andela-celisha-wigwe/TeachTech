@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-md-3">
             <div class="list-group">
-                @foreach($categories as $category)
+                @foreach(TeachTech\Category::all() as $category)
                     <button type="button" class="list-group-item">
                         <div class="row">
                             <div class="col-md-2"><img src="{{ Auth::user()->getAvatar() }}" style="width: 100%;" alt="..."></div>

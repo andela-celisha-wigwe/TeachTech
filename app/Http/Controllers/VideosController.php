@@ -95,6 +95,14 @@ class VideosController extends Controller
         return redirect()->back();
     }
 
+    public function search(Request $request)
+    {
+        $data = $request->all();
+        $toSearch = $data['search'];
+        $videos = Video::where('title', 'LIKE', "%$toSearch%")->get();
+        return view('videos.index', compact('videos'));
+    }
+
     public function delete(Request $request)
     {
         $id = $request->id;
