@@ -26,20 +26,23 @@
                 @endif
 
                 <div>
-                    {!! Form::open(['url' => 'video/' . $video->id . '/update', 'class' => 'form-horizontal', 'role' => 'form']) !!}
+                    <form method="POST" action="/video/{{ $video->id }}/update" accept-charset="UTF-8" class="form-horizontal" role="form">
+                    <input name="_token" type="hidden" value="{{ csrf_token() }}">
                          <div class="panel-body">
                              <div class="panel-body" style="padding: 10px;">
                                     <div class="form-group">
-                                        {!! Form::label('title', 'Title:') !!}
-                                        {!! Form::text('title', $video->title, ['class' => 'form-control']) !!}
+                                        <label for="title">Title:</label>
+                                        <input class="form-control" value="{{ $video->title }}" name="title" type="text" id="title">
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::label('url', 'URL:') !!}
-                                        {!! Form::url('url', $video->url, ['class' => 'form-control']) !!}
+                                        <label for="url">URL:</label>
+                                        <input class="form-control" value="{{ $video->url }}" name="url" type="url" id="url"> 
                                     </div>
                                     <div class="form-group">
-                                        {!! Form::label('title', 'Description:') !!}
-                                        {!! Form::textarea('description', $video->description, ['class' => 'form-control new-video-description', 'placeholder' => 'Briefly describe the video']) !!}
+                                        <label for="description">Description:</label>
+                                        <textarea class="form-control new-video-description" placeholder="Briefly describe the video" name="description" cols="50" rows="10">
+                                            {{ $video->description }}
+                                        </textarea>
                                     </div>
                                     <div class="form-group">
                                         <select class="form-control new-video-category" name="category_id">
@@ -53,7 +56,7 @@
                          <div class="panel-footer">
                             <button type="submit" class="add-video btn-teach-tech">Save</button>
                         </div>
-                    {!! Form::close() !!}
+                    </form>
                 </div>
             </div>
         </div>
