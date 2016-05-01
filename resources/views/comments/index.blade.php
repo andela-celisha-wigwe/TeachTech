@@ -18,7 +18,16 @@
                     </form>
                 </div>
                 <div class="col-md-12 comment-info">
-                    <i>{{ $comment->user->name }} | {{ $comment->commentedAt() }}</i>
+                    <i>
+                        {{ $comment->user->name }} | {{ $comment->commentedAt() }}
+
+                        @if( Auth::user()->favors($comment) )
+                            @include('partials.like_unlike', ['action' => 'unfavorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Unlike'])
+                        @else
+                            @include('partials.like_unlike', ['action' => 'favorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Like'])
+                        @endif
+
+                    </i>
                 </div>
             </div>
         </div>

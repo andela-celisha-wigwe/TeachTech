@@ -61,11 +61,11 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     @if(Auth::user())
-                                        <div class="col-md-12 like-comment">
+                                        <div class="col-md-12 like-video">
                                             @if( Auth::user()->favors($video) )
-                                                @include('partials.like_unlike', ['action' => "unfavorite", 'button' => 'Unlike'])
+                                                @include('partials.like_unlike', ['action' => 'unfavorite', 'model' => 'video', 'id' => $video->id, 'button' => 'Unlike'])
                                             @else
-                                                @include('partials.like_unlike', ['action' => "favorite", 'button' => 'Like'])
+                                                @include('partials.like_unlike', ['action' => 'favorite', 'model' => 'video', 'id' => $video->id, 'button' => 'Like'])
                                             @endif
                                         </div>
                                         @include('comments.new')

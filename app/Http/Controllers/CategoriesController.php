@@ -11,7 +11,7 @@ class CategoriesController extends Controller
 {
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::orderBy('name')->get();#->order_by();
         return view('categories.index', compact('categories'));
     }
 
@@ -19,7 +19,7 @@ class CategoriesController extends Controller
     {
         $id = $request->id;
         $category = Category::find($id);
-        $videos = $category->videos()->paginate(5);//->get();
+        $videos = $category->videos()->paginate(18);//->get();
 
         return view('videos.index', compact('videos'));
     }

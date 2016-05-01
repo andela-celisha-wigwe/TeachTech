@@ -33,6 +33,37 @@ class CommentsController extends Controller
         return redirect()->back();
     }
 
+    public function like(Request $request)
+    {
+        $id = $request->id;
+        $comment = Comment::find($id);
+
+        $liked = $comment->favorites()->where('user_id', Auth::user()->id)->first();
+
+        if ($liked == null) {
+            $liked = $comment->favorites()->create([
+                        'user_id' => Auth::user()->id,
+                    ]);
+        }
+        $liked->status = 1;
+        $liked->save();
+
+        return redirect()->back();
+    }
+
+    public function unlike(Request $request)
+    {
+        $id = $request->id;
+        $comment = Comment::find($id);
+        $liked = $comment->favorites()->where('user_id', Auth::user()->id)->first();
+        $liked->status = 0;
+        $liked->save();
+
+        return redirect()->back();
+    }
+
+    
+
     public function destroy(Request $request)
     {
         $id = $request->id;

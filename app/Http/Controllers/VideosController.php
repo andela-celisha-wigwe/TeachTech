@@ -15,7 +15,7 @@ class VideosController extends Controller
 {
     public function index()
     {
-        $videos = Video::paginate(18);
+        $videos = Video::latest()->paginate(18);
         $categories = Category::all();
         return view('videos.index', compact('videos', 'categories'));
     }
@@ -60,7 +60,7 @@ class VideosController extends Controller
     {
         $id = $request->id;
         $video = Video::find($id);
-        $comments = $video->comments()->get();
+        $comments = $video->comments()->latest()->get();
         return view('videos.show', compact('video', 'comments'));
     }
 
@@ -99,7 +99,7 @@ class VideosController extends Controller
     {
         $data = $request->all();
         $toSearch = $data['search'];
-        $videos = Video::where('title', 'LIKE', "%$toSearch%")->paginate(5);
+        $videos = Video::where('title', 'LIKE', "%$toSearch%")->latest()->paginate(5);
         return view('videos.index', compact('videos'));
     }
 

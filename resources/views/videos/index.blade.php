@@ -12,7 +12,7 @@
                         <div class="col-md-10">All Categories</div>
                     </div>
                 </a>
-                @foreach(TeachTech\Category::all() as $category)
+                @foreach(TeachTech\Category::orderBy('name')->get() as $category)
                     <a href="/categories/{{ $category->id }}" type="button" class="list-group-item">
                         <div class="row">
                             <div class="col-md-2"><img src="{{ Auth::user()->getAvatar() }}" style="width: 100%;" alt="..."></div>
