@@ -5,6 +5,7 @@ namespace TeachTech;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use TeachTech\Video;
 use TeachTech\Comment;
+use TeachTech\Favorite;
 
 class User extends Authenticatable
 {
@@ -70,5 +71,37 @@ class User extends Authenticatable
     public function cannnotHandle($video)
     {
         return !($this->canHandle($video));
+    }
+
+    /**
+    * Get all of the staff member's photos.
+    */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function favors(\Illuminate\Database\Eloquent\Model $model)
+    {
+        $liked = $this->favored($model);
+
+        return $liked == null ? false : $liked->status;
+    }
+
+    public function favoritedVideos()
+    {
+        $videoLikes = $this->favorites()->where('favoritable_type', 'TeachTech\Video')->where('status', 1)->get();
+        $results = array_map(function ($like) {
+            return \TeachTech\Video::find($like['favoritable_id']);
+        }, $videoLikes->toArray());
+
+        return $results;
+
+        // return $this->hasManyThrough('TeachTech\Video', 'TeachTech\Favorite', 'favoritable_id', 'user_id');
+    }
+
+    public function favored(\Illuminate\Database\Eloquent\Model $model)
+    {
+        return $this->favorites()->where('favoritable_id', $model->id)->where('favoritable_type', get_class($model))->first();
     }
 }

@@ -29,4 +29,9 @@ class Comment extends Model
     {
         return $this->created_at->diffForHumans();
     }
+
+    public function favorites()
+    {
+        return $this->morphMany('TeachTech\Favorite', 'favoritable');
+    }
 }

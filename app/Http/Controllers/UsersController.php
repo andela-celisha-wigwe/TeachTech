@@ -79,4 +79,12 @@ class UsersController extends Controller
             return redirect('home');
         }
     }
+
+    public function favorite()
+    {
+        $user = Auth::user();
+        $user->favorites()->create();
+        return "";
+    }
+
 }

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use TeachTech\User;
 use TeachTech\Category;
 use TeachTech\Comment;
+use TeachTech\Favorite;
 
 class Video extends Model
 {
@@ -50,5 +51,10 @@ class Video extends Model
     public function shortTitle()
     {
         return substr($this->title, 0, 10);
+    }
+
+    public function favorites()
+    {
+        return $this->morphMany('TeachTech\Favorite', 'favoritable');
     }
 }

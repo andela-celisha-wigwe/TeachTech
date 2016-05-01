@@ -61,6 +61,19 @@
                             <div class="col-md-12">
                                 <div class="row">
                                     @if(Auth::user())
+                                        <div class="col-md-12 like-comment">
+                                            @if( Auth::user()->favors($video) )
+                                                <form  class="form-horizontal" method="POST" action="/video/{{ $video->id }}/unfavorite">
+                                                    <button type="submit" class="btn btn-default">Unlike</button>
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                </form>
+                                            @else
+                                                <form  class="form-horizontal" method="POST" action="/video/{{ $video->id }}/favorite">
+                                                    <button type="submit" class="btn btn-default">Like</button>
+                                                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                                </form>
+                                            @endif
+                                        </div>
                                         @include('comments.new')
                                     @else
                                         <button class="loginButton">Login</button> to post comment.

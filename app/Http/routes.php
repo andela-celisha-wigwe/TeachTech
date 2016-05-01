@@ -29,6 +29,8 @@ Route::get('video/{id}/delete', 'VideosController@delete');
 Route::delete('video/{id}', 'VideosController@destroy');
 Route::get('video/{id}', 'VideosController@show');
 Route::post('video/{id}/update', 'VideosController@update');
+Route::post('video/{id}/favorite', 'VideosController@like');
+Route::post('video/{id}/unfavorite', 'VideosController@unlike');
 Route::post('user/update', 'UsersController@updateUser');
 Route::get('categories', 'CategoriesController@index');
 Route::get('categories/{id}', 'CategoriesController@show');

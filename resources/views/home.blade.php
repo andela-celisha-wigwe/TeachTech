@@ -141,6 +141,20 @@
                                     </div> -->
                                 </div>
                             @endforeach
+                            <p>Your Favored Videos</p>
+                            @foreach($user->favoritedVideos() as $video)
+                                <div class="row">
+                                    <div class="col-md-2" id="{{ $video->id }}">
+                                        <div class="user-avatar thumbnail">
+                                            <img style="width:100%;" id="{{ $video->id }}" class="video_thumbnail img-responsive" src="http://img.youtube.com/vi/{{ $video->vID() }}/2.jpg" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10" id="{{ $video->id }}">
+                                        <h3>{{ $video->title }}</h3>
+                                        <p>{{ $video->description }}</p>
+                                    </div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                 </div>

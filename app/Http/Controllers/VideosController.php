@@ -103,6 +103,35 @@ class VideosController extends Controller
         return view('videos.index', compact('videos'));
     }
 
+    public function like(Request $request)
+    {
+        $id = $request->id;
+        $video = Video::find($id);
+
+        $liked = $video->favorites()->where('user_id', Auth::user()->id)->first();
+
+        if ($liked == null) {
+            $liked = $video->favorites()->create([
+                        'user_id' => Auth::user()->id,
+                    ]);
+        }
+        $liked->status = 1;
+        $liked->save();
+
+        return redirect()->back();
+    }
+
+    public function unlike(Request $request)
+    {
+        $id = $request->id;
+        $video = Video::find($id);
+        $liked = $video->favorites()->where('user_id', Auth::user()->id)->first();
+        $liked->status = 0;
+        $liked->save();
+
+        return redirect()->back();
+    }
+
     public function delete(Request $request)
     {
         $id = $request->id;
