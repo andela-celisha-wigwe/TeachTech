@@ -6,7 +6,7 @@ php:
 
 script:
     - mkdir -p build/logs
-    - composer install
+    # - composer install
     - phpunit --coverage-clover build/logs/clover.xml
 
 after_success:
