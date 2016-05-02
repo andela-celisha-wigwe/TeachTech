@@ -13,8 +13,11 @@ class ExampleTest extends TestCase
      */
     public function testBasicExample()
     {
-        $this->visit('/')
-             ->see('TeachTech');
+        $response = $this->visit('/')
+                ->see('TeachTech');
+
+        // $this->assertEquals(300, $response->status());
+
     }
 
     public function testAdd()
