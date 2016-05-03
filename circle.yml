@@ -1,9 +1,0 @@
-machine:
-    php:
-        version: 5.5.11
-
-test:
-	override:
-		- phpunit --coverage-clover build/logs/clover.xml
-	post:
-		- php vendor/bin/coveralls
