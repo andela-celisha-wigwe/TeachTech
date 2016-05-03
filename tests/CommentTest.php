@@ -45,6 +45,34 @@ class CommentTest extends TestCase
     	$this->countElements('.like-comment', 2);
     }
 
+    public function testUserComments()
+    {
+        $this->createTTModels();
+        $anotherComment = factory(TeachTech\Comment::class)->create([
+            'user_id'       => 1,
+        ]);
+
+        $user = TeachTech\User::find(1);
+        $comments = $user->comments()->get();
+        $this->assertEquals(2, count($comments));
+    }
+
+    public function testUserVideos()
+    {
+        $this->createTTModels();
+        $video1 = TeachTech\Video::find(1);
+        $video2 =   factory(TeachTech\Video::class)->create([
+                        'user_id'       => 1,
+                    ]);
+
+        $this->createFavoriteFor($video1);
+        $this->createFavoriteFor($video2);
+        
+        $user = TeachTech\User::find(1);
+        $favVidoes = $user->favoritedVideos();
+        $this->assertEquals(2, count($favVidoes));
+    }
+
     public function notestCommentLike()
     {
 

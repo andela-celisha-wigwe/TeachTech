@@ -138,20 +138,45 @@ class VideoTest extends TestCase
     	$this->assertEquals(0, $status);
     }
 
-    public function notestVideoDelete()
+    public function testVideoDelete()
     {
-    	$this->createTTModels();
+        $this->createTTModels();
 
-    	$user = TeachTech\User::find(1);
-    	$page = $this->actingAs($user)
-    			->visit('home')
-    			->see('Delete')
-    			->click('Delete')
-    			->seePageIs('home')
-    			->see('Video Deleted')
-    			;
+        $user = TeachTech\User::find(1);
+        $page = $this->actingAs($user)
+                ->visit('home')
+                ->see('Delete')
+                ->click('Delete')
+                ->seePageIs('home')
+                ->see('Video Deleted')
+                ;
 
-    	$this->assertSessionHas('success', 'Video Deleted');
+        // $this->assertSessionHas('success', 'Video Deleted');
+        $this->countElements('.delete_video', 0);
+        $video = TeachTech\Video::find(1);
+        $this->assertEquals(null, $video);
+    }
+
+    public function notestVideoNotDeletedByWrongUser()
+    {
+        $this->createTTModels();
+        factory(TeachTech\User::class)->create([
+            'id' => 100,
+        ]);
+        // $user->videos()->create([]);
+
+        $user = TeachTech\User::find(100);
+        $page = $this->actingAs($user)
+                ->visit('home')
+                ->see('Delete')
+                // ->click('Delete')
+                // ->seePageIs('home')
+                // ->see('Not allowed')
+                ;
+
+        $this->countElements('.delete_video', 0);
+        $video = TeachTech\Video::find(1);
+        $this->assertEquals(null, $video);
     }
 
 }

@@ -139,6 +139,7 @@ class VideosController extends Controller
         $user = Auth::user();
 
         if ($user->cannnotHandle($video)) {
+            dd('hihihf');
             $request->session()->flash('error', 'Not allowed');
             return redirect()->back();
         }

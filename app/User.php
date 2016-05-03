@@ -39,7 +39,7 @@ class User extends Authenticatable
 
     public function owns(\Illuminate\Database\Eloquent\Model $model)
     {
-        return $this == $model->user;
+        return $this->id == $model->user_id;
     }
 
     public function numberOfVidoes()
@@ -64,7 +64,8 @@ class User extends Authenticatable
 
     public function cannnotHandle($video)
     {
-        return !($this->canHandle($video));
+        return !($this->owns($video));
+        // return !($this->canHandle($video));
     }
 
     /**
