@@ -45,8 +45,10 @@ class VideoTest extends TestCase
     {
     	$this->createVideo();
     	$this->visit('video/1')
+                ->see('roy')
     			->see('A Introduction to MsDotNet')
     			;	
+        $this->countElements('.video-user', 1);
     }
 
     public function testVideoShowWithAuthUser()
@@ -56,6 +58,7 @@ class VideoTest extends TestCase
     	$user = TeachTech\User::find(1);
 	    $page =	$this->actingAs($user)
 	    		->visit('video/1')
+                ->see('roy')
     			->see('A Introduction to MsDotNet')
     			->see('Very nice introduction to the MS-Dot-Net Framework.')
     			;
@@ -157,26 +160,20 @@ class VideoTest extends TestCase
         $this->assertEquals(null, $video);
     }
 
-    public function notestVideoNotDeletedByWrongUser()
+    public function testVideoNotDeletedByWrongUser()
     {
         $this->createTTModels();
+
         factory(TeachTech\User::class)->create([
             'id' => 100,
         ]);
-        // $user->videos()->create([]);
 
         $user = TeachTech\User::find(100);
         $page = $this->actingAs($user)
-                ->visit('home')
-                ->see('Delete')
-                // ->click('Delete')
-                // ->seePageIs('home')
-                // ->see('Not allowed')
+                ->visit('video/1/delete')
+                ->seePageIs('videos')
+                ->see('Not allowed')
                 ;
-
-        $this->countElements('.delete_video', 0);
-        $video = TeachTech\Video::find(1);
-        $this->assertEquals(null, $video);
     }
 
 }

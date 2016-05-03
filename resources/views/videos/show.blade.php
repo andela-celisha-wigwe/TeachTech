@@ -58,8 +58,9 @@
                             <div class="col-md-12" style="background-color: #2385A1; color: #FFFFFF;">
                                     <iframe width="100%" height="400" src="{{ $video->srcFrame() }}?autoplay=0" frameborder="0" allowfullscreen ></iframe>
                             </div>
-                            <div class="col-md-12">
-                                <h3 class="panel">{{ $video->title }}</h3>
+                            <div class="col-md-12 panel">
+                                <h3 class="video-title">{{ $video->title }}</h3>
+                                <h4 class="video-user">{{ $video->user->name }}</h4>
                                 <hr />
                             </div>
                             <div class="col-md-12">

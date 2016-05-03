@@ -71,7 +71,7 @@ class CommentsController extends Controller
         // $video = $comment->video;
         Comment::destroy($id);
         // return json_encode(true);
-        // return redirect()->back();
+        return redirect()->back();
     }
 
     public function update(Request $request)

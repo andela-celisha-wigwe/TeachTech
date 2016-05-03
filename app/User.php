@@ -57,15 +57,9 @@ class User extends Authenticatable
         return $this->avatar != null;
     }
 
-    public function canHandle($video)
-    {
-        return $this == $video->user;
-    }
-
     public function cannnotHandle($video)
     {
         return !($this->owns($video));
-        // return !($this->canHandle($video));
     }
 
     /**
