@@ -17,7 +17,7 @@ class UsersController extends Controller
     protected function validateImage($data)
     {
         return Validator::make($data, [
-            'image' => 'mimes:jpeg,jpg,png,gif|required|max:150' // max 10000kb
+            'image' => 'mimes:jpeg,jpg,png,gif|required|max:150' // max 150kb
         ]);
     }
 

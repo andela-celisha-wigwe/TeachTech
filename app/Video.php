@@ -11,7 +11,7 @@ use TeachTech\Favorite;
 class Video extends Model
 {
     protected $fillable = [
-        'title', 'url', 'description', 'category'
+        'title', 'url', 'description', 'category_id'
     ];
 
     public function user()

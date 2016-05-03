@@ -6,7 +6,7 @@
         <div class="col-md-10 comment">
             <div class="row">
                 <div class="col-md-12 comment-text">
-                    <span id="current_comment_{{ $comment->id }}">{{$comment->comment}}</span>
+                    <span id="current_comment_{{ $comment->id }}" class="comment_comment">{{$comment->comment}}</span>
                     <form method="POST" action="/comment/{{ $comment->id }}">
                         <input name="_method" type="hidden" value="PATCH">
                         <div id="edit_comment_div{{ $comment->id }}" style="display: none;">
@@ -21,11 +21,13 @@
                     <i>
                         {{ $comment->user->name }} | {{ $comment->commentedAt() }}
 
-                        @if( Auth::user()->favors($comment) )
-                            @include('partials.like_unlike', ['action' => 'unfavorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Unlike'])
-                        @else
-                            @include('partials.like_unlike', ['action' => 'favorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Like'])
-                        @endif
+                        <div class="like-model like-comment">
+                            @if( Auth::user()->favors($comment) )
+                                @include('partials.like_unlike', ['action' => 'unfavorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Unlike'])
+                            @else
+                                @include('partials.like_unlike', ['action' => 'favorite', 'model' => 'comment', 'id' => $comment->id, 'button' => 'Like'])
+                            @endif
+                        </div>
 
                     </i>
                 </div>

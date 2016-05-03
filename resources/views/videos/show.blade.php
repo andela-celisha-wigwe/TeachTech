@@ -59,9 +59,13 @@
                                     <iframe width="100%" height="400" src="{{ $video->srcFrame() }}?autoplay=0" frameborder="0" allowfullscreen ></iframe>
                             </div>
                             <div class="col-md-12">
+                                <h3 class="panel">{{ $video->title }}</h3>
+                                <hr />
+                            </div>
+                            <div class="col-md-12">
                                 <div class="row">
                                     @if(Auth::user())
-                                        <div class="col-md-12 like-video">
+                                        <div class="col-md-12 like-model like-video">
                                             @if( Auth::user()->favors($video) )
                                                 @include('partials.like_unlike', ['action' => 'unfavorite', 'model' => 'video', 'id' => $video->id, 'button' => 'Unlike'])
                                             @else
