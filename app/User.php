@@ -39,7 +39,8 @@ class User extends Authenticatable
 
     public function isOwner($id)
     {
-        return $this->id === (Video::find($id))->user_id;
+        $video = Video::find($id);
+        return $this->id === $video->user_id;
     }
 
     public function isCommenter($id)
