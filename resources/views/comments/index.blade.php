@@ -33,7 +33,7 @@
                 </div>
             </div>
         </div>
-        @if(Auth::user() && Auth::user()->isCommenter($comment->id))
+        @if(Auth::user() && Auth::user()->owns($comment))
             <div class="col-md-1 comment-modify">
                 <span class="toggle_edit edit_on" id="{{ $comment->id }}" for="{{ $comment->id }}" style="cursor: pointer;">...</span>
                 <div class="row menu_buttons" id="menu_for_{{ $comment->id }}" style="display: none; position: absolute;">

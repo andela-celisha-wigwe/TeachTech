@@ -14,7 +14,7 @@
                     </div>
                 </div>
                     <!-- @if(Auth::user())
-                        @if(Auth::user()->isOwner($video->id))
+                        @if(Auth::user()->owns($video))
                             <div class="row video-manager">
                                 <div class="col-md-4 manager-edit"><i class="fa fa-pencil"></i></div>
                                 <form action="video/{{$video->id}}">

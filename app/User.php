@@ -37,16 +37,9 @@ class User extends Authenticatable
         return $this->hasMany(Comment::class);
     }
 
-    public function isOwner($id)
+    public function owns(\Illuminate\Database\Eloquent\Model $model)
     {
-        $video = Video::find($id);
-        return $this->id === $video->user_id;
-    }
-
-    public function isCommenter($id)
-    {
-        $comment = Comment::find($id);
-        return $this->id == $comment->user_id;
+        return $this == $model->user;
     }
 
     public function numberOfVidoes()
