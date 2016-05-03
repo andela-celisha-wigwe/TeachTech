@@ -27,18 +27,49 @@ class VideoTest extends TestCase
 
     public function testAddVideo()
     {
-    	$user = $this->createUser();
-    	$category = $this->createCategory();
-	    $page =	$this->actingAs($user)
-		    		->visit('/videos')
-					->type('A new title', 'title')
-					->type('https://www.youtube.com/watch?v=3oT9PQcFZKc', 'url')
-					->type('A new description', 'description')
-					->select(1, 'category_id')
-					->press('Add')
-					->seePageIs('home')
-					->see('A new title')
-		    		;
+        $user = $this->createUser();
+        $category = $this->createCategory();
+        $page = $this->actingAs($user)
+                    ->visit('/videos')
+                    ->type('A new title', 'title')
+                    ->type('https://www.youtube.com/watch?v=3oT9PQcFZKc', 'url')
+                    ->type('A new description', 'description')
+                    ->select(1, 'category_id')
+                    ->press('Add')
+                    ->seePageIs('home')
+                    ->see('A new title')
+                    ;
+    }
+
+    public function testAddVideoFailsForNoUserAuth()
+    {
+        $user = $this->createUser();
+        $category = $this->createCategory();
+        $page = $this->visit('/videos')
+                    ->type('A new title', 'title')
+                    ->type('https://www.youtube.com/watch?v=3oT9PQcFZKc', 'url')
+                    ->type('A new description', 'description')
+                    ->select(1, 'category_id')
+                    ->press('Add')
+                    ->seePageIs('login')
+                    ->see('Login or register to post a video.')
+                    ;
+    }
+
+    public function testAddVideoValidatorFails()
+    {
+        $user = $this->createUser();
+        $category = $this->createCategory();
+        $page = $this->actingAs($user)
+                    ->visit('/videos')
+                    ->type('', 'title')
+                    ->type('', 'url')
+                    ->type('', 'description')
+                    ->select('', 'category_id')
+                    ->press('Add')
+                    // ->seePageIs('videos')
+                    // ->see('A new title')
+                    ;
     }
 
     public function testVideoShowWithoutAuthUser()
@@ -66,15 +97,29 @@ class VideoTest extends TestCase
 
     public function testVideoEditPage()
     {
-    	$this->createTTModels();
+        $this->createTTModels();
 
-    	$user = TeachTech\User::find(1);
-	    $page =	$this->actingAs($user)
-	    		->visit('video/1/edit')
-    			->see('A Introduction to MsDotNet')
-    			->see('This is an introduction to the Microsoft DotNet Framework. It is very powerful.')
-    			->see('Save')
-    			;
+        $user = TeachTech\User::find(1);
+        $page = $this->actingAs($user)
+                ->visit('video/1/edit')
+                ->see('A Introduction to MsDotNet')
+                ->see('This is an introduction to the Microsoft DotNet Framework. It is very powerful.')
+                ->see('Save')
+                ;
+    }
+
+    public function testVideoEditPageRedirectsUser()
+    {
+        $this->createTTModels();
+        factory(TeachTech\User::class)->create([
+            'id'   => 100,
+        ]);
+
+        $user = TeachTech\User::find(100);
+        $page = $this->actingAs($user)
+                ->visit('video/1/edit')
+                ->see('Not allowed')
+                ;
     }
 
     public function testVideoUpdate()
@@ -95,15 +140,20 @@ class VideoTest extends TestCase
     			;
     }
 
-    public function notestVideoSearch()
+    public function testVideoSearch()
     {
     	$this->createVideo();
+        $response = $this->call('POST', 'video/search', ['search' => 'Introdu']);
+
+        // $this->assertEquals('saved!', $response->getContent());
+
     	$this->visit('/videos')
     			->type('Introdu', 'search')
-    			->press("Search")
+    			// ->press("Search")
     			->seePageIs('/videos')
-    			->see()
+    			// ->see()
     			;
+        $this->assertEquals(200, $response->status());
     }
 
     public function testVideoLike()

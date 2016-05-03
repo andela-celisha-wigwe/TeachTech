@@ -13,6 +13,7 @@
 </div>
 <div class="form-group">
     <select class="form-control new-video-category" name="category_id">
+            <option class="new-video-category" id="cat-0" value="">Select a category</option>
         @foreach(TeachTech\Category::all() as $category)
             <option class="new-video-category" id="cat-{{ $category->id }}" value="{{ $category->id }}">{{ $category->name }}</option>
         @endforeach

@@ -40,6 +40,7 @@ class VideosController extends Controller
     public function createVideo(Request $request)
     {
         if (!(Auth::user())) {
+            $request->session()->flash('error', 'Login or register to post a video.');
             return redirect('login');
         }
         $user = Auth::user();
@@ -51,9 +52,8 @@ class VideosController extends Controller
             return redirect()->back()->withErrors($validator->messages());
         }
 
-        if ($user->videos()->create($data)) {
-            return redirect('home');
-        }
+        $user->videos()->create($data);
+        return redirect('home');
     }
 
     public function show(Request $request)
