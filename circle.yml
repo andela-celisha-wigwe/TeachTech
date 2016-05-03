@@ -4,6 +4,6 @@ machine:
 
 test:
 	override:
-    	- phpunit --coverage-clover build/logs/clover.xml
-    post:
-    	- php vendor/bin/coveralls
+		- phpunit --coverage-clover build/logs/clover.xml
+	post:
+		- php vendor/bin/coveralls
