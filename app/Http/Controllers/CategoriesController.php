@@ -28,7 +28,12 @@ class CategoriesController extends Controller
 
     public function add(Request $request)
     {
-        if(Auth::user() == null || Auth::user()->isNotAdmin()) {
+        if(Auth::user() == null) {
+            $request->session()->flash('error', 'Please Login.');
+            return redirect()->back();
+        }
+
+        if(Auth::user()->isNotAdmin()) {
             $request->session()->flash('error', 'Not Allowed.');
             return redirect()->back();
         }
