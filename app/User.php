@@ -6,6 +6,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use TeachTech\Video;
 use TeachTech\Comment;
 use TeachTech\Favorite;
+use TeachTech\Category;
 
 class User extends Authenticatable
 {
@@ -32,6 +33,11 @@ class User extends Authenticatable
         return $this->hasMany(Video::class);
     }
 
+    public function isNotAdmin()
+    {
+        return !($this->is_admin);
+    }
+
     public function comments()
     {
         return $this->hasMany(Comment::class);
@@ -50,6 +56,11 @@ class User extends Authenticatable
     public function getAvatar()
     {
         return $this->hasAvatar() ? $this->avatar : asset('uploads/def_profile.png');
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
     }
 
     private function hasAvatar()

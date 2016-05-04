@@ -55,7 +55,9 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
     protected function createCategory()
     {
         $category = factory(TeachTech\Category::class)->create([
-            'name' => 'MsDotNet',
+            'name'      => 'MsDotNet',
+            'user_id'   => 1,
+            'brief'     => 'This section deals with lessons on MsDotNet.'
         ]);
         return $category;
     }

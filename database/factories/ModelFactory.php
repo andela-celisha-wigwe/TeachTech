@@ -43,7 +43,9 @@ $factory->define(TeachTech\Video::class, function (Faker\Generator $faker) {
 
 $factory->define(TeachTech\Category::class, function (Faker\Generator $faker) {
     return [
-        'name'         => $faker->name,
+        'name'      => $faker->name,
+        'brief'     => $faker->sentence(rand(5, 10), true),
+        'user_id'   => rand(1, 5),
     ];
 });
 
