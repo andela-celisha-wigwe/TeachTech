@@ -180,6 +180,16 @@ class CategoryTest extends TestCase
     	$this->assertEquals(1, $count);
     }
 
+    public function testCategoryUser()
+    {
+    	$this->createTTModels();
+
+    	$category = TeachTech\Category::find(1);
+    	$user = TeachTech\User::find(1);
+    	$categoryUser = $category->user;
+    	$this->assertEquals($user, $categoryUser);
+    }
+
     public function testCreateCategoryNoAuth()
     {
     	$this->createTTModels();

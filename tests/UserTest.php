@@ -4,6 +4,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery as m;
+use org\bovigo\vfs\vfsStream as vfsStream;
 use Laravel\Socialite;
 
 class UserTest extends TestCase
@@ -83,6 +84,21 @@ class UserTest extends TestCase
     		->seePageIs('home')
     		;
     }
+// string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null, bool $test = false
+    public function testUserChangeAvatar()
+    {   
+        $file = __DIR__ . '/testprofile.jpg';
+
+        $uploadedFile = new \Symfony\Component\HttpFoundation\File\UploadedFile($file, 'test.jpg');
+        $uploadedFile = m::mock('\Symfony\Component\HttpFoundation\File\UploadedFile', [$file, 'test', 'image/jpg', 200]);
+        
+        $data = [
+            '_token' => csrf_token(),
+            'file' => $uploadedFile,
+        ];
+
+        $this->call('POST', 'user/upload/avatar', $data);
+    }
 
     public function notestUserChangeAvatar()
     {
@@ -105,6 +121,9 @@ class UserTest extends TestCase
 	    		->press('Upload')
 	    		->seePageIs('home')
 	    		;
+        $this->assertResponseStatus(200);
+        $location = $this->$page->headers->get('location');
+        // dd($location);
 	    // dd($page);
     }
 
