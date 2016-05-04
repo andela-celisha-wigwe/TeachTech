@@ -1,7 +1,12 @@
 <?php
 
+use org\bovigo\vfs\vfsStream as vfsStream;
+use Mockery as m;
+
 class TestCase extends Illuminate\Foundation\Testing\TestCase
 {
+    private $vfsRoot;
+    private $vfsFile;
     /**
      * The base URL to use while testing the application.
      *
@@ -114,5 +119,28 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
         $this->assertCount($number, $this->crawler->filter($selector));
 
         return $this;
+    }
+
+    public function createMockFile($name = null, $extention = null)
+    {
+        // $uploadedFile = new \Symfony\Component\HttpFoundation\File\UploadedFile(codecept_data_dir().'/attachments/temporary/' . 'test', 'test', 'image/jpg', 200);
+        
+        // $file = m::mock(\Symfony\Component\HttpFoundation\File\UploadedFile::class, [
+        //     'getClientOriginalName'      => $name . $extention,
+        //     'getClientOriginalExtension' => $extention,
+        // ]);
+
+        // $this->vfsRoot = vfsStream::setup('home');
+        // // $path = vfsStream::url('home/' . $name . '.' . $extention);
+        // $this->vfsFile = vfsStream::url('home/config.ini');
+
+        $root = vfsStream::setup('home');
+        $path = vfsStream::url('home/config.ini');
+
+        // // $a = scandir($path);
+        // // dd($a);
+        // $file = fopen("vfs://home/config.ini", 'a');
+
+        return $path;
     }
 }

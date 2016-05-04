@@ -183,4 +183,19 @@ class CommentTest extends TestCase
         $this->assertEquals('This is the updated comment.', $text);
 
     }
+
+    public function testCommentUpdateValidationFails()
+    {
+        $this->createTTModels();
+        $data = [
+            '_token'    => csrf_token(),
+            'comment'   => '',
+        ];
+
+        $response = $this->call('PATCH', '/comment/1/update', ['_token' => csrf_token(), 'comment' => '']);
+        $comment = TeachTech\Comment::find(1);
+        $text = $comment->comment;
+        $this->assertEquals('Very nice introduction to the MS-Dot-Net Framework.', $text);
+
+    }
 }

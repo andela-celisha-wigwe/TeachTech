@@ -56,6 +56,24 @@ class VideoTest extends TestCase
                     ;
     }
 
+    public function testVideoUpdateValidationFails()
+    {
+        $this->createTTModels();
+        $user = TeachTech\User::find(1);
+        $data = [
+            '_token'    => csrf_token(),
+            'url'       => '',
+            'title'     => 'A new title',
+            'category_id'   => 1,
+            'description'   => 'this is a new description',
+        ];
+
+        $response = $this->actingAs($user)->call('POST', 'video/1/update', $data);
+        $location = $response->headers->get('location');
+        $this->assertResponseStatus(302);
+        $this->assertEquals('http://localhost', $location);
+    }
+
     public function testAddVideoValidatorFails()
     {
         $user = $this->createUser();
