@@ -59,16 +59,9 @@ class UsersController extends Controller
     {
         $data = $request->all();
         $user = Auth::user();
-        if ($user->update($data)) {
-            return redirect('home');
-        }
-    }
+        $user->update($data);
 
-    public function favorite()
-    {
-        $user = Auth::user();
-        $user->favorites()->create();
-        return "";
+        return redirect('home');
     }
 
 }
