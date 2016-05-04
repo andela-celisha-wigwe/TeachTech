@@ -79,6 +79,37 @@ class CategoryTest extends TestCase
 	    // // dd($page);
     }
 
+    public function testEditCategoryPage()
+    {
+    	$this->call('GET', 'category/1/edit');
+    	$this->assertResponseStatus(302);
+    	$this->assertSessionHas('error', 'Please Login');
+    }
+
+    public function testEditCategoryPageNoAdmin()
+    {
+    	$this->createTTModels();
+    	$user = TeachTech\User::find(1);
+
+    	$this->actingAs($user)->call('GET', 'category/1/edit');
+
+    	$this->assertResponseStatus(302);
+    	$this->assertSessionHas('error', 'Not Allowed.');
+    }
+
+    public function testEditCategoryPageWrongOnwer()
+    {
+    	$this->createTTModels();
+    	$user = factory(TeachTech\User::class)->create([
+    		'id'	=> 100,
+    	]);
+
+    	$this->actingAs($user)->call('GET', 'category/1/edit');
+
+    	$this->assertResponseStatus(302);
+    	$this->assertSessionHas('error', 'Not Allowed.');
+    }
+
     public function testCreateCategoryFails()
     {
     	$this->createTTModels();
@@ -140,6 +171,23 @@ class CategoryTest extends TestCase
     	$this->assertEquals(1, $count);
     }
 
+    public function testUpdateCategoryFailsWrongUser()
+    {
+    	$this->createTTModels();
+    	$user = factory(TeachTech\User::class)->create([
+    		'id'		=> 100,
+    		'is_admin'	=> 1,
+    	]);
+
+    	$response = $this->actingAs($user)->call('POST', 'category/1/update', ['_token' => csrf_token(), 'name' => 'PHPPHPPHPPHPPHPPHPPHP', 'brief' => '']);
+    	$this->assertSessionHas('error', 'Not Allowed.');
+    	$this->assertEquals(302, $response->status());
+
+    	$categories = TeachTech\Category::all();
+    	$count = count($categories);
+    	$this->assertEquals(1, $count);
+    }
+
     public function testUpdateCategoryNoAuth()
     {
     	$this->createTTModels();
@@ -147,6 +195,7 @@ class CategoryTest extends TestCase
     	$user->is_admin = 1;
 
     	$response = $this->call('POST', 'category/1/update', ['_token' => csrf_token(), 'name' => 'PHPPHPPHPPHPPHPPHPPHP', 'brief' => '']);
+    	$this->assertSessionHas('error', 'Not Allowed.');
     	$this->assertEquals(302, $response->status());
 
     	$categories = TeachTech\Category::all();

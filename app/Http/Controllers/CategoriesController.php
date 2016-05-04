@@ -60,13 +60,18 @@ class CategoriesController extends Controller
 
     public function edit(Request $request)
     {
-        if(Auth::user() == null || Auth::user()->isNotAdmin()) {
-            $request->session()->flash('error', 'Not Allowed.');
-            return redirect()->back();
+        if(Auth::user() == null) {
+            $request->session()->flash('error', 'Please Login');
+            return redirect()->to('login');
         }
 
         $id = $request->id;
         $category = Category::find($id);
+
+        if(Auth::user()->isNotAdmin() || Auth::user()->cannnotHandle($category)) {
+            $request->session()->flash('error', 'Not Allowed.');
+            return redirect()->back();
+        }
 
         return view('categories.edit', compact('category'));
     }
@@ -81,13 +86,18 @@ class CategoriesController extends Controller
             return redirect()->back();
         }
 
+        $category = Category::find($id);
+        if(Auth::user()->cannnotHandle($category)) {
+            $request->session()->flash('error', 'Not Allowed.');
+            return redirect()->back();
+        }
+
         $validator = $this->validateCategory($data);
 
         if($validator->fails()) {
             return redirect()->back()->withErrors($validator->messages());
         }
 
-        $category = Category::find($id);
         $category->update($data);
 
         $request->session()->flash('success', 'Category updated.');
