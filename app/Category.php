@@ -11,7 +11,7 @@ class Category extends Model
     protected $table = 'categories';
 
     protected $fillable = [
-        'name'
+        'name', 'brief',
     ];
 
     public function videos()
@@ -22,5 +22,10 @@ class Category extends Model
     public function numberOfVideos()
     {
     	return count($this->videos()->get());
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

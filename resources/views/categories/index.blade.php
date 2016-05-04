@@ -6,7 +6,10 @@
 
 <div class="panel panel-default">
         <div class="panel-heading">
-            CATEGORIES
+            CATEGORIES 
+            @if(Auth::user() && Auth::user()->is_admin)
+                <a class="btn btn-default add-category" href="category/add" id="add-category-button"><i class="fa fa-plus"></i> New</a>
+            @endif
         </div>
         <div class="container">
             <div class="row">
