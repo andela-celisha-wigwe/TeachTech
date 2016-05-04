@@ -35,7 +35,7 @@ Route::post('comment/{id}/favorite', 'CommentsController@like');
 Route::post('comment/{id}/unfavorite', 'CommentsController@unlike');
 Route::post('user/update', 'UsersController@updateUser');
 Route::get('categories', 'CategoriesController@index');
-Route::get('category/add', 'CategoriesController@new');
+Route::get('category/add', 'CategoriesController@add');
 Route::get('category/{id}/edit', 'CategoriesController@edit');
 Route::post('category/add', 'CategoriesController@create');
 Route::post('category/{id}/update', 'CategoriesController@update');

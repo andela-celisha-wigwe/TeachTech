@@ -26,7 +26,7 @@ class CategoriesController extends Controller
         return view('videos.index', compact('videos'));
     }
 
-    public function new(Request $request)
+    public function add(Request $request)
     {
         if(Auth::user() == null || Auth::user()->isNotAdmin()) {
             $request->session()->flash('error', 'Not Allowed.');
