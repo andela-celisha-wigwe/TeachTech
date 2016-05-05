@@ -24,11 +24,6 @@ class UsersController extends Controller
     public function changeAvatar(Request $request)
     {
         $file  = Input::file('file');
-        // dd($file->getMimeType());
-        // dd($file->getClientOriginalName());
-        // dd($file->getSize());
-
-
         
         $fileArray = ['image' => $file];
 

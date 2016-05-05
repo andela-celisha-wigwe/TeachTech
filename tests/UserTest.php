@@ -127,6 +127,21 @@ class UserTest extends TestCase
         $this->assertResponseStatus(302);
     }
 
+    public function testUserChangeAvatarFails()
+    {
+        $file = __DIR__ . '/testLargeFile.jpg';
+        $uploadedFile = new Illuminate\Http\UploadedFile($file, 'test.jpg', 'image/jpeg', 200, null, true);
+        $user = $this->createUser();
+        $page = $this->actingAs($user)
+                ->visit('/home')
+                ->click('Change Avatar')
+                ->attach($uploadedFile, 'file')
+                ->press('Upload')
+                ->seePageIs('home')
+                ;
+        $page = $this->assertResponseStatus(200);
+    }
+
     public function testUserSocialLoginCallback()
     {
         $userMock = m::mock('TeachTech\User');
@@ -139,11 +154,6 @@ class UserTest extends TestCase
         // $expectedTarget = 'https://www.facebook.com/v2.5/dialog/oauth?client_id=';
         // $this->assertEquals($expectedTarget, substr($target, 0, 53));
         // $this->assertResponseStatus(302);
-    }
-
-    public function getNewFile()
-    {
-        return __DIR__ . '/testprofile.jpg';
     }
 
     public function testUserChangeAvatar()
@@ -160,8 +170,7 @@ class UserTest extends TestCase
         // $uploadedFile = m::mock('Illuminate\Http\UploadedFile', [$filePath, $fileName, 'image/jpg', 5000000]);
         
         $file = __DIR__ . '/testprofile.jpg';
-        $uploadedFile = new Illuminate\Http\UploadedFile(__DIR__ . '/testprofile.jpg', 'test.jpg', 'image/jpeg', 200, null, true);
-        $uploadedFile;
+        $uploadedFile = new Illuminate\Http\UploadedFile($file, 'test.jpg', 'image/jpeg', 200, null, true);
         $user = $this->createUser();
     	$page = $this->actingAs($user)
 	            ->visit('/home')
