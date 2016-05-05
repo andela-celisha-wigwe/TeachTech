@@ -32,6 +32,14 @@ class UserTest extends TestCase
     					;
     }
 
+    public function testGuest()
+    {
+        $this->createTTModels();
+        $user = TeachTech\User::find(1);
+
+        $this/*->actingAs($user)*/->call('GET', 'guest');
+    }
+
     public function testUserRegisterationFails()
     {	
     	$page = $this->visit('/register')

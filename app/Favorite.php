@@ -3,6 +3,7 @@
 namespace TeachTech;
 
 use Illuminate\Database\Eloquent\Model;
+use TeachTech\User;
 
 class Favorite extends Model
 {
@@ -16,8 +17,13 @@ class Favorite extends Model
         return $this->morphTo();
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function favoriter()
     {
-        return $this->belongsTo('User');
+        return $this->favoriter = $this->user;
     }
 }
