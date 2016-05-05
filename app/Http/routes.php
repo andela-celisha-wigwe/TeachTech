@@ -24,6 +24,9 @@ Route::get('auth/{link}/callback', 'Auth\AuthController@handleProviderCallback')
 Route::post('twitter/login', 'Auth\AuthController@useTwitterEmail');
 Route::post('video/add', 'VideosController@createVideo');
 Route::get('videos', 'VideosController@index');
+// Route::group(['middleware' => 'auth'], function () {
+// Route::get('video/{id}/edit', ['VideosController@edit']);
+// });
 Route::get('video/{id}/edit', 'VideosController@edit');
 Route::get('video/{id}/delete', 'VideosController@delete');
 Route::delete('video/{id}', 'VideosController@destroy');

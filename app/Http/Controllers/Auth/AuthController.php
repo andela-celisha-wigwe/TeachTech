@@ -70,7 +70,6 @@ class AuthController extends Controller
     public function redirectToProvider(Request $request)
     {
         $link = $request->link;
-        // $d = Socialite::driver($link)->redirect()->headers->all()['location'][0];
         return Socialite::driver($link)->redirect();
     }
 
@@ -81,6 +80,7 @@ class AuthController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
+        $user = Socialite::driver($link)->user();
         $link = $request->link;
         try {
             $user = Socialite::driver($link)->user();
