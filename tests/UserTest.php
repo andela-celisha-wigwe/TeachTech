@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Mockery as m;
 use org\bovigo\vfs\vfsStream as vfsStream;
 use Laravel\Socialite;
+use org\bovigo\vfs\content\LargeFileContent;
 
 class UserTest extends TestCase
 {
@@ -116,21 +117,6 @@ class UserTest extends TestCase
         $this->assertEquals('daddyboy@example.com', $email);
         $this->assertTrue($state);
     }
-// string $path, string $originalName, string $mimeType = null, int $size = null, int $error = null, bool $test = false
-    public function testUserChangeAvatar()
-    {   
-        $file = $this->getNewFile();
-
-        $uploadedFile = new \Symfony\Component\HttpFoundation\File\UploadedFile($file, 'test.jpg');
-        $uploadedFile = m::mock('\Symfony\Component\HttpFoundation\File\UploadedFile', [$file, 'test', 'image/jpg', 200]);
-        
-        $data = [
-            '_token' => csrf_token(),
-            'file' => $uploadedFile,
-        ];
-
-        $this->call('POST', 'user/upload/avatar', $data);
-    }
 
     public function testUserSocialLogin()
     {
@@ -146,7 +132,7 @@ class UserTest extends TestCase
         $userMock = m::mock('TeachTech\User');
         // $return = m::mock('Symfony\Component\HttpFoundation\RedirectResponse', ['https://www.facebook.com/v2.5/dialog/oauth?client_id=602752246555102&redirect_uri=http%3A%2F%2Flocalhost%3A8888%2Fauth%2Ffacebook%2Fcallback&scope=email&response_type=code&state=yREbxevMp4zehuFXagOO9eEdLrhw0EJTd9Dd1nDG']);
         // $return->shouldReceive('user')->once()->andReturn($userMock);
-        $response = $this->call('GET', 'auth/facebook/callback');
+        $response = $this->call('GET', '/auth/github/callback?code=0a591670ba41f938a161&state=JTvXrZ1Qkpp70mIQVehXegNnw761GMKSeVhbq9t4');
         // $response = $this->visit('auth/facebook/callback');
         // $target = $response->headers->get('location');
         // dd($response->status());
@@ -160,29 +146,32 @@ class UserTest extends TestCase
         return __DIR__ . '/testprofile.jpg';
     }
 
-    public function notestUserChangeAvatar()
+    public function testUserChangeAvatar()
     {
-    	$cloudConfig = m::mock('\Cloudinary');
-    	$cloudConfig->shouldReceive('config')->with([
-    		'cloud_name'  => 'dax1lcajn',
-	    	'api_key'     => '724974163436624',
-	    	'api_secret'  => 'LEGPtwbA-YFzAbfRsbOSK4Dvodc',
+        // $fileName = 'test.jpg';
+        // $root = vfsStream::setup('home');
+        // $path = vfsStream::url('home/');
+        // $file = vfsStream::newFile($fileName)
+        //                 ->withContent(LargeFileContent::withKilobytes(100))
+        //                 ->at($root)
+        //                 ->setContent($content = '');
+        // $filePath = $path.'/'.$fileName;
 
-    	]);
-    	$uploader = m::mock('\Cloudinary\Uploader');
-    	$uploader->shouldReceive('upload')->with([
-
-    	]);
-    	$user = $this->createUser();
+        // $uploadedFile = m::mock('Illuminate\Http\UploadedFile', [$filePath, $fileName, 'image/jpg', 5000000]);
+        
+        $file = __DIR__ . '/testprofile.jpg';
+        $uploadedFile = new Illuminate\Http\UploadedFile(__DIR__ . '/testprofile.jpg', 'test.jpg', 'image/jpeg', 200, null, true);
+        $uploadedFile;
+        $user = $this->createUser();
     	$page = $this->actingAs($user)
 	            ->visit('/home')
 	    		->click('Change Avatar')
-	    		->attach(__DIR__ . '/testprofile.jpg', 'file')
+	    		->attach($uploadedFile, 'file')
 	    		->press('Upload')
-	    		->seePageIs('home')
+	    		// ->seePageIs('home')
 	    		;
-        $this->assertResponseStatus(200);
-        $location = $this->$page->headers->get('location');
+        $page = $this->assertResponseStatus(200);
+        // $location = $this->$page->headers->get('location');
         // dd($location);
 	    // dd($page);
     }
